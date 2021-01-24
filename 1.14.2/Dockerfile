@@ -1,8 +1,7 @@
 FROM debian:stable-slim as builder
 
 # Install dependencies
-RUN useradd -r dogecoin \
-  && apt-get update -y \
+RUN apt-get update -y \
   && apt-get install -y \
   	build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils \
   	libboost-system-dev libboost-filesystem-dev libboost-chrono-dev \
