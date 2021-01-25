@@ -14,25 +14,23 @@ RUN apt-get update -y \
 
 WORKDIR /src
 
+# Defaults for BerkeleyDB
 ENV BDB_VERSION="5.1.29.NC" BDB_SRC="/src/db"
-# Install BerkeleyDB and patch it
+
+# Install BerkeleyDB, patch it and build
 RUN mkdir -p $BDB_SRC \
 	&& wget "http://download.oracle.com/berkeley-db/db-$BDB_VERSION.tar.gz" \
 	&& echo "08238e59736d1aacdd47cfb8e68684c695516c37f4fbe1b8267dde58dc3a576c db-$BDB_VERSION.tar.gz" | sha256sum -c \
 	&& tar -xzvf db-$BDB_VERSION.tar.gz \
-	&& sed -i 's/__atomic_compare_exchange/__atomic_compare_exchange_db/g' db-$BDB_VERSION/src/dbinc/atomic.h
-
-# Build BerkeleyDB
-RUN cd db-$BDB_VERSION/build_unix/ \
+	&& sed -i 's/__atomic_compare_exchange/__atomic_compare_exchange_db/g' db-$BDB_VERSION/src/dbinc/atomic.h \
+	&& cd db-$BDB_VERSION/build_unix/ \
     && ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$BDB_SRC \
     && make -j4 \
     && make install
 
-# Clone dogecoin core
-RUN git clone -b $DOGECOIN_VERSION https://github.com/dogecoin/dogecoin.git ./doge
-
-# Build and strip core
-RUN cd ./doge \
+# Clone, build and strip core
+RUN git clone -b $DOGECOIN_VERSION https://github.com/dogecoin/dogecoin.git ./doge \
+	&& cd ./doge \
     && ./autogen.sh \
     && ./configure \
         LDFLAGS="-L$BDB_SRC/lib/" \
@@ -41,7 +39,7 @@ RUN cd ./doge \
         --disable-tests \
         --disable-bench \
         --disable-ccache \
-        --with-gui=no \
+        --without-gui \
         --with-utils \
         --with-libs \
         --with-daemon \
