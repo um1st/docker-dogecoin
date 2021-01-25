@@ -7,6 +7,7 @@ A [dogecoin](https://dogecoin.com) docker image.
 - `1.14.2`, `latest` ([1.14/Dockerfile](https://github.com/um1st/docker-dogecoin/blob/master/1.14/Dockerfile))
 - `1.14` *(hereinafter repeats blockchain releases, without `.0` at the end)* ([1.14/Dockerfile](https://github.com/um1st/docker-dogecoin/blob/master/1.14/Dockerfile))
 - `1.10.0` ([1.14/Dockerfile](https://github.com/um1st/docker-dogecoin/blob/master/1.10/Dockerfile))
+- `1.8.3` ([1.8/Dockerfile](https://github.com/um1st/docker-dogecoin/blob/master/1.8/Dockerfile))
 
 ## Usage
 
