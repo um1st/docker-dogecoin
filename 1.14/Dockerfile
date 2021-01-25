@@ -1,4 +1,7 @@
-FROM debian:stable-slim as builder
+FROM debian:buster-slim as builder
+
+# Default version is latest
+ARG DOGECOIN_VERSION="v1.14.2"
 
 # Install dependencies
 RUN apt-get update -y \
@@ -26,7 +29,7 @@ RUN cd db-$BDB_VERSION/build_unix/ \
     && make install
 
 # Clone dogecoin core
-RUN git clone -b v1.14.2 https://github.com/dogecoin/dogecoin.git ./doge
+RUN git clone -b $DOGECOIN_VERSION https://github.com/dogecoin/dogecoin.git ./doge
 
 # Build and strip core
 RUN cd ./doge \
@@ -52,7 +55,7 @@ RUN cd ./doge \
     && strip /src/lib/libdogecoinconsensus.so.0.0.0
 
 # Clean image
-FROM debian:stable-slim
+FROM debian:buster-slim
 
 LABEL maintainer="um1st <um1statl1st@gmail.com>"
 
