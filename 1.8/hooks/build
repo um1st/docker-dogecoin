@@ -2,7 +2,7 @@
 
 if [ -z "$DOGECOIN_VERSION" ]
 then
-      docker build -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+      docker build -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" .
 else
-      docker build --build-arg DOGECOIN_VERSION=$DOGECOIN_VERSION -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+      docker build --build-arg DOGECOIN_VERSION="$DOGECOIN_VERSION" -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" .
 fi
