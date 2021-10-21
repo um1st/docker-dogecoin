@@ -1,7 +1,7 @@
 FROM debian:buster-slim as builder
 
 # Default version is latest
-ARG DOGECOIN_VERSION="v1.14.3"
+ARG DOGECOIN_VERSION="v1.14.4"
 
 # Install dependencies
 RUN apt-get update -y \
